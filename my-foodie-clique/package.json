@@ -3,8 +3,8 @@
   "version": "0.1.0",
   "private": true,
   "dependencies": {
-    "google-maps-react": "^1.1.0", 
     "firebase": "^5.0.4",
+    "google-maps-react": "^1.1.11",
     "react": "^15.6.1",
     "react-dom": "^15.6.1",
     "react-scripts": "1.1.4"
@@ -17,6 +17,6 @@
     "deploy": "firebase deploy"
   },
   "devDependencies": {
-    "google-maps": "^3.2.1" 
+    "google-maps": "^3.2.1"
   }
 }

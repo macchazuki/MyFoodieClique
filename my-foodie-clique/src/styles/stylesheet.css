@@ -2,11 +2,11 @@ html {
     font-size: 10px;
     font-family: sans-serif;
    }
-   p {
+p {
     font-size: 1.6rem;
     line-height: 1.5;
    }
-   h1 {
+h1 {
     font-family: billabong, 'billabongregular';
     text-align: center;
     font-weight: 100;
@@ -16,25 +16,25 @@ html {
     color: black;
     text-decoration: none;
    }
-   h1 a {
+ h1 a {
     color: black;
     text-decoration: none;
    }
-   h1 a:focus {
+h1 a:focus {
     outline: 0;
    }
-   @font-face {
+@font-face {
     font-family: 'billabongregular';
     src: url("https://cdn.rawgit.com/milktronics/beaglegr.am/master/public/fonts/billabong-webfont.eot");
     src: url("https://cdn.rawgit.com/milktronics/beaglegr.am/master/public/fonts/billabong-webfont.eot?#iefix") format('embedded-opentype'), url("https://cdn.rawgit.com/milktronics/beaglegr.am/master/public/fonts/billabong-webfont.woff") format('woff'), url("https://cdn.rawgit.com/milktronics/beaglegr.am/master/public/fonts/billabong-webfont.ttf") format('truetype'), url("https://cdn.rawgit.com/milktronics/beaglegr.am/master/public/fonts/billabong-webfont.svg#billabongregular") format('svg');
     font-weight: normal;
     font-style: normal;
    }
-   body {
+body {
     background: offwhite;
    }
 
-   .addIcon {
+.addIcon {
     background: url("https://image.flaticon.com/icons/svg/60/60740.svg") center no-repeat;
     background-size: contain;
     padding: 40px;
@@ -42,3 +42,13 @@ html {
     margin: 20px auto;
     border: none;
    }
+.form {
+    background-size: contain;
+    padding: 40px;
+    display: table;
+    margin: 20px auto;
+    border-style: solid;
+    border-width: 5px;
+    background-color: lightgrey;
+    border-radius: 5px;
+}
