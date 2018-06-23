@@ -28,11 +28,13 @@ class DateTimeComponent extends Component {
                 <form onSubmit={this.addDateTime.bind(this)}>
                     <input type="text" ref={el => this.inputEl = el} />
                     <input type="submit" />
-                    <ol>
-                        { /* Render the list of dateTimes */
-                            this.state.dateTimes.map(dateTime => <li key={dateTime.id}>{dateTime.text}</li>)
-                        }
-                    </ol>
+                    <h2>
+                        <ol>
+                            { /* Render the list of dateTimes */
+                                this.state.dateTimes.map(dateTime => <li key={dateTime.id}>{dateTime.text}</li>)
+                            }
+                        </ol>
+                    </h2>
                 </form>
             </div>
         );

@@ -52,3 +52,17 @@ body {
     background-color: lightgrey;
     border-radius: 5px;
 }
+
+.hide {
+    visibility: hidden;
+ }
+
+ #noliststyle li {
+    list-style-type: none;
+}
+
+#wrapper {
+    background-color: lightgrey;
+    background-size: contain;
+    text-align: center;
+}

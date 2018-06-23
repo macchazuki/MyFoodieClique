@@ -19,7 +19,7 @@ class Main extends Component {
                         <LandingPage />
                     </div>
                 )} />
-                <Route path="/NewAppt" render={({ history }) => (
+                <Route path="/NewAppt" venues = {this.props.venues} render={({ history }) => (
                     <NewAppt onHistory={history} />
                 )} />
 
