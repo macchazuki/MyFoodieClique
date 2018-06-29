@@ -5,7 +5,7 @@ import AnonLogIn from './AnonLogIn'
 class LandingPage extends Component {
 
     render () { 
-    var user = this.props.currentUser;
+    var user = this.props.user;
         return (
             <div>
                 {user ?  

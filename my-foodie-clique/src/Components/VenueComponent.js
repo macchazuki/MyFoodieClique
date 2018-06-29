@@ -1,6 +1,6 @@
 import React, { Component } from 'react'
 import VoteButton from './VoteButton'
-import fire, {auth} from '../fire'
+import fire from '../fire'
 
 class VenueComponent extends Component {
     constructor(props) {

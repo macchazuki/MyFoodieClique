@@ -12,13 +12,21 @@ class Main extends Component {
            
         }    
     }
-    
-    
+
+    componentDidMount() {
+        fire.auth().onAuthStateChanged((user) => {
+          if (user) {
+            this.setState({ user });
+          } 
+        })
+    }   
 
     render() {
         
-        var user = fire.auth().currentUser;
+        if(fire.auth().currentUser){
+        var user = fire.auth().currentUser.uid;
         console.log(user);
+        }
 
         return (
 
@@ -29,7 +37,7 @@ class Main extends Component {
                 </h1>
                 <Route exact path="/" render={() => (
                     <div>
-                        <LandingPage currentUser={this.props.currentUser}/>
+                        <LandingPage user={user}/>
                     </div>
                 )} />
                 <Route path="/NewAppt" venues = {this.props.venues} render={({ history }) => (

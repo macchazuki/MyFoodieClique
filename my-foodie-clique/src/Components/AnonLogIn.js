@@ -1,7 +1,7 @@
-import React, { Component } from 'react';
+import React from 'react';
 import fire from '../fire.js';
 
-function AnonLogIn(currentUser) {
+function AnonLogIn() {
   
         fire.auth().signInAnonymously();  
         
