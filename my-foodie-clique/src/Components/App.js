@@ -6,6 +6,7 @@ import {withRouter} from 'react-router'
 function mapStateToProps(state) {
     return {
         venues: state.venues,
+        currentUser: state.currentUser
     }
 }
 

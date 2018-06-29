@@ -1,21 +1,37 @@
 import React, { Component } from 'react';
+import fire from '../fire.js';
 
-class AnonLogIn extends Component {
-    render() {
+function AnonLogIn(currentUser) {
+  
+        fire.auth().signInAnonymously();  
+        
+        fire.auth().onAuthStateChanged(function(user) {
+            if (user) {
+              // User is signed in.
+              var isAnonymous = user.isAnonymous;
+              var uid = user.uid;      
+             console.log('gg' + uid)
+              // ...
+            } else {
+              // User is signed out.
+              // ...
+            }
+            // ...
+          })
+        
+          
+          
         return (
+          
             <div>
-                <h2>Anonymous Login</h2>
-                <ul id="noliststyle">
-                    <li>
-                        <a id="btnLogin" href="#">Login Anonymously</a>
-                    </li>
-                    <li>
-                        <a id="btnLogout" href="#" className="hide">Logout</a>
-                    </li>
-                </ul>
+                
+                
+                                
+                  
             </div>
         )
-    }
+    
+    
 }
 
-export default AnonLogIn;
+export default AnonLogIn
