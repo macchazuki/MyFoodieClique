@@ -13,7 +13,10 @@ class Main extends Component {
         }    
     }
 
+
     componentDidMount() {
+        fire.auth().signInAnonymously()
+
         fire.auth().onAuthStateChanged((user) => {
           if (user) {
             this.setState({ user });
@@ -41,7 +44,7 @@ class Main extends Component {
                     </div>
                 )} />
                 <Route path="/NewAppt" venues = {this.props.venues} render={({ history }) => (
-                    <NewAppt onHistory={history} />
+                    <NewAppt user = {user} onHistory={history} />
                 )} />
                 
             </div>

@@ -5,7 +5,7 @@ import fire from '../fire'
 class DateTimeComponent extends Component {
     constructor(props) {
         super(props);
-        this.state = { dateTimes: [] }; // <- set up react state
+        this.state = { dateTimes: [], user : this.props.user }; // <- set up react state
     }
     componentWillMount() {
         /* Create reference to dateTimes in Firebase Database */
@@ -19,7 +19,8 @@ class DateTimeComponent extends Component {
     addDateTime(e) {
         e.preventDefault(); // <- prevent form submit from reloading the page
         /* Send the dateTime to Firebase */
-        fire.database().ref('dateTimes').push(this.inputEl.value);
+        let DateTime = this.inputEl.value;
+        fire.database().ref('dateTimes').child(DateTime).set({username : this.props.user});
         this.inputEl.value = ''; // <- clear the input
     }
     render() {
@@ -31,7 +32,7 @@ class DateTimeComponent extends Component {
                     <h2>
                         <ol>
                             { /* Render the list of dateTimes */
-                                this.state.dateTimes.map(dateTime => <li key={dateTime.id}>{dateTime.text}</li>)
+                                this.state.dateTimes.map(dateTime => <li key={dateTime.id}>{dateTime.id}</li>)
                             }
                         </ol>
                     </h2>

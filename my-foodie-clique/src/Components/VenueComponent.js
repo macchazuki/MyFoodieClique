@@ -3,25 +3,29 @@ import VoteButton from './VoteButton'
 import fire from '../fire'
 
 class VenueComponent extends Component {
-    constructor(props) {
+
+
+     constructor(props) {
         super(props);
-        this.state = { venues: [] }; // <- set up react state
+        this.state = { venues: [], user : this.props.user}; // <- set up react state
     }
-    componentWillMount() {
-        /* Create reference to venues in Firebase Database */
+   componentWillMount() {
+        // Create reference to venues in Firebase Database 
         let venuesRef = fire.database().ref('venues').orderByKey().limitToLast(100);
         venuesRef.on('child_added', snapshot => {
-            /* Update React state when venue is added at Firebase Database */
+            // Update React state when venue is added at Firebase Database 
             let venue = { text: snapshot.val(), id: snapshot.key };
             this.setState({ venues: [venue].concat(this.state.venues) });
         })
     }
     addVenue(e) {
         e.preventDefault(); // <- prevent form submit from reloading the page
-        /* Send the dateTime to Firebase */
-        fire.database().ref('venues').push(this.inputEl.value);
+        // Send the dateTime to Firebase 
+        let Venue = this.inputEl.value;
+        fire.database().ref('venues').child(Venue).set({username : this.props.user});
         this.inputEl.value = ''; // <- clear the input
-    }
+    } 
+    
     render() {
         return (
             <div className="form">
@@ -31,7 +35,7 @@ class VenueComponent extends Component {
                     <h2>
                         <ol>
                             { /* Render the list of venues */
-                                this.state.venues.map(venue => <li key={venue.id}>{venue.text}</li>)
+                                this.state.venues.map(venue => <li key={venue.id}>{venue.id}</li>)
                             }
                         </ol>
                     </h2>
