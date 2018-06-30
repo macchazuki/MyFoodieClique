@@ -15,12 +15,13 @@ class Main extends Component {
 
 
     componentDidMount() {
-        fire.auth().signInAnonymously()
-
         fire.auth().onAuthStateChanged((user) => {
           if (user) {
             this.setState({ user });
-          } 
+          } else {
+            fire.auth().signInAnonymously()
+            this.setState({user});
+          }
         })
     }   
 

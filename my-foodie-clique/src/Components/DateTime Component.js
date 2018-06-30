@@ -20,10 +20,14 @@ class DateTimeComponent extends Component {
         e.preventDefault(); // <- prevent form submit from reloading the page
         /* Send the dateTime to Firebase */
         let DateTime = this.inputEl.value;
-        fire.database().ref('dateTimes').child(DateTime).set({username : this.props.user});
+        //check if input is valid
+        if(DateTime){
+        fire.database().ref('dateTimes/' + DateTime + '/' + this.props.user).set({Vote : true});
         this.inputEl.value = ''; // <- clear the input
+        }
     }
     render() {
+        var user = this.props.user
         return (
             <div className="form">
                 <form onSubmit={this.addDateTime.bind(this)}>
@@ -32,7 +36,7 @@ class DateTimeComponent extends Component {
                     <h2>
                         <ol>
                             { /* Render the list of dateTimes */
-                                this.state.dateTimes.map(dateTime => <li key={dateTime.id}>{dateTime.id}</li>)
+                                this.state.dateTimes.map(dateTime => <li key={dateTime.id}>{dateTime.id} <VoteButton category = 'dateTimes' Venue = '' user = {user} dateTime = {dateTime.id}/></li>)
                             }
                         </ol>
                     </h2>

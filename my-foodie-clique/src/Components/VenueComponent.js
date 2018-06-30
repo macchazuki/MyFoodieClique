@@ -7,7 +7,8 @@ class VenueComponent extends Component {
 
      constructor(props) {
         super(props);
-        this.state = { venues: [], user : this.props.user}; // <- set up react state
+        this.state = { venues: []}; // <- set up react state
+
     }
    componentWillMount() {
         // Create reference to venues in Firebase Database 
@@ -22,11 +23,15 @@ class VenueComponent extends Component {
         e.preventDefault(); // <- prevent form submit from reloading the page
         // Send the dateTime to Firebase 
         let Venue = this.inputEl.value;
-        fire.database().ref('venues').child(Venue).set({username : this.props.user});
+        //check if input is valid
+        if(Venue){
+        fire.database().ref('venues/' + Venue + '/' + this.props.user).set({Vote : true});
         this.inputEl.value = ''; // <- clear the input
+        }
     } 
     
     render() {
+        var user = this.props.user;
         return (
             <div className="form">
                 <form onSubmit={this.addVenue.bind(this)}>
@@ -35,7 +40,7 @@ class VenueComponent extends Component {
                     <h2>
                         <ol>
                             { /* Render the list of venues */
-                                this.state.venues.map(venue => <li key={venue.id}>{venue.id}</li>)
+                                this.state.venues.map(venue => <li key={venue.id}>{venue.id} <VoteButton category = 'venue' Venue = {venue.id} user = {user} dateTime = '' /> </li>)
                             }
                         </ol>
                     </h2>

@@ -6,7 +6,7 @@ class NewAppt extends Component {
    
     render() {
         var user = this.props.user;
-        console.log(user);
+
         return (
             <div>
                 <div className="form"><h2>Add a Date and Time:</h2> <DateTimeComponent user = {user}/></div>
