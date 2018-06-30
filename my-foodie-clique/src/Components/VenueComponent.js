@@ -40,7 +40,7 @@ class VenueComponent extends Component {
                     <h2>
                         <ol>
                             { /* Render the list of venues */
-                                this.state.venues.map(venue => <li key={venue.id}>{venue.id} <VoteButton category = 'venue' Venue = {venue.id} user = {user} dateTime = '' /> </li>)
+                                this.state.venues.map(venue => <li key={venue.id}>{venue.id} <VoteButton category = 'venues' Venue = {venue.id} user = {user} dateTime = '' /> </li>)
                             }
                         </ol>
                     </h2>
