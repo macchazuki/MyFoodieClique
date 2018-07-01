@@ -13,6 +13,7 @@ class VenueComponent extends Component {
    componentWillMount() {
         // Create reference to venues in Firebase Database 
         let venuesRef = fire.database().ref('venues').orderByKey().limitToLast(100);
+        
         venuesRef.on('child_added', snapshot => {
             // Update React state when venue is added at Firebase Database 
             let venue = { text: snapshot.val(), id: snapshot.key };

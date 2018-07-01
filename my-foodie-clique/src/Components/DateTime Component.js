@@ -8,13 +8,17 @@ class DateTimeComponent extends Component {
         this.state = { dateTimes: [], user : this.props.user }; // <- set up react state
     }
     componentWillMount() {
+
         /* Create reference to dateTimes in Firebase Database */
         let dateTimesRef = fire.database().ref('dateTimes').orderByKey().limitToLast(100);
         dateTimesRef.on('child_added', snapshot => {
             /* Update React state when dateTime is added at Firebase Database */
             let dateTime = { text: snapshot.val(), id: snapshot.key };
             this.setState({ dateTimes: [dateTime].concat(this.state.dateTimes) });
+            console.log(snapshot.numChildren());
+     
         })
+        
     }
     addDateTime(e) {
         e.preventDefault(); // <- prevent form submit from reloading the page
@@ -28,6 +32,7 @@ class DateTimeComponent extends Component {
     }
     render() {
         var user = this.props.user
+        console.log(this.state.dateTimes)
         return (
             <div className="form">
                 <form onSubmit={this.addDateTime.bind(this)}>
