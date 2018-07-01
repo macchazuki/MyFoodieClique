@@ -10,7 +10,7 @@ class LandingPage extends Component {
                 <div>              
             <Link className="addIcon" to="/NewAppt"> </Link>
                     </div>               
-  }
+  
     </div>
     );
     }

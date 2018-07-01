@@ -7,7 +7,7 @@ class DateTimeComponent extends Component {
         super(props);
         this.state = { dateTimes: [], user : this.props.user }; // <- set up react state
     }
-    componentWillMount() {
+    componentDidMount() {
 
         /* Create reference to dateTimes in Firebase Database */
         let dateTimesRef = fire.database().ref('dateTimes').orderByKey().limitToLast(100);
@@ -15,8 +15,6 @@ class DateTimeComponent extends Component {
             /* Update React state when dateTime is added at Firebase Database */
             let dateTime = { text: snapshot.val(), id: snapshot.key };
             this.setState({ dateTimes: [dateTime].concat(this.state.dateTimes) });
-            console.log(snapshot.numChildren());
-     
         })
         
     }

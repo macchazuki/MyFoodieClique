@@ -12,13 +12,14 @@ class VoteButton extends Component {
 
     componentWillMount() {
       if(this.props.category === 'venues'){
-      fire.database().ref('venues/' + this.props.Venue).on('child_added', snapshot => {
+      fire.database().ref('venues/' + this.props.Venue).on('value', snapshot => {
           // Update React state when venue is added at Firebase Database 
           let count = snapshot.numChildren();
+          console.log(count);
           this.setState({ count : count });
       })
      } else {
-        fire.database().ref('dateTimes/' + this.props.dateTime).on('child_added', snapshot => {
+        fire.database().ref('dateTimes/' + this.props.dateTime).on('value', snapshot => {
           // Update React state when venue is added at Firebase Database 
           let count = snapshot.numChildren();
           this.setState({ count : count });

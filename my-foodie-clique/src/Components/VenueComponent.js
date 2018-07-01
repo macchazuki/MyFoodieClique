@@ -10,7 +10,7 @@ class VenueComponent extends Component {
         this.state = { venues: []}; // <- set up react state
 
     }
-   componentWillMount() {
+   componentDidMount() {
         // Create reference to venues in Firebase Database 
         let venuesRef = fire.database().ref('venues').orderByKey().limitToLast(100);
         
