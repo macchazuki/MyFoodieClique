@@ -11,12 +11,13 @@ class DateTimeComponent extends Component {
 
         /* Create reference to dateTimes in Firebase Database */
         let dateTimesRef = fire.database().ref('dateTimes').orderByKey().limitToLast(100);
+        let dateTimeUpdated = [];
         dateTimesRef.on('child_added', snapshot => {
             /* Update React state when dateTime is added at Firebase Database */
-            let dateTime = { text: snapshot.val(), id: snapshot.key };
-            this.setState({ dateTimes: [dateTime].concat(this.state.dateTimes) });
-        })
-        
+            let dateTime = [{text: snapshot.val(), id: snapshot.key}];
+            dateTimeUpdated = dateTimeUpdated.concat(dateTime);
+            this.setState({ dateTimes: dateTimeUpdated });
+        })      
     }
     addDateTime(e) {
         e.preventDefault(); // <- prevent form submit from reloading the page

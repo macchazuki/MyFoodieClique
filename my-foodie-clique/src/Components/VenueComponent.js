@@ -10,14 +10,15 @@ class VenueComponent extends Component {
         this.state = { venues: []}; // <- set up react state
 
     }
-   componentDidMount() {
+   componentWillMount() {
         // Create reference to venues in Firebase Database 
         let venuesRef = fire.database().ref('venues').orderByKey().limitToLast(100);
-        
+        let venuesUpdated = [];
         venuesRef.on('child_added', snapshot => {
             // Update React state when venue is added at Firebase Database 
-            let venue = { text: snapshot.val(), id: snapshot.key };
-            this.setState({ venues: [venue].concat(this.state.venues) });
+            let venue = [{ text: snapshot.val(), id: snapshot.key }];
+            venuesUpdated = venuesUpdated.concat(venue);
+            this.setState({ venues: venuesUpdated });
         })
     }
     addVenue(e) {

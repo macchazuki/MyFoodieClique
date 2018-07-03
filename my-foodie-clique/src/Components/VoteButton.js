@@ -15,7 +15,6 @@ class VoteButton extends Component {
       fire.database().ref('venues/' + this.props.Venue).on('value', snapshot => {
           // Update React state when venue is added at Firebase Database 
           let count = snapshot.numChildren();
-          console.log(count);
           this.setState({ count : count });
       })
      } else {

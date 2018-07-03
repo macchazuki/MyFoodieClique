@@ -44,7 +44,7 @@ class Main extends Component {
                         <LandingPage user={user}/>
                     </div>
                 )} />
-                <Route path="/NewAppt" venues = {this.props.venues} render={({ history }) => (
+                <Route path="/NewAppt" render={({ history }) => (
                     <NewAppt user = {user} onHistory={history} />
                 )} />
                 
