@@ -17,7 +17,17 @@ class DateTimeComponent extends Component {
             let dateTime = [{text: snapshot.val(), id: snapshot.key}];
             dateTimeUpdated = dateTimeUpdated.concat(dateTime);
             this.setState({ dateTimes: dateTimeUpdated });
-        })      
+        })    
+        dateTimesRef.on('child_removed', snapshot => {
+            for (var i =0; i < dateTimeUpdated.length; i++) {
+                 console.log(dateTimeUpdated[i].text);
+                 console.log(snapshot.val());
+                if (dateTimeUpdated[i].id === snapshot.key) {
+                 dateTimeUpdated.splice(i);
+                 this.setState({ dateTimes: dateTimeUpdated });
+                  }
+                }
+            })  
     }
     addDateTime(e) {
         e.preventDefault(); // <- prevent form submit from reloading the page

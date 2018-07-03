@@ -20,6 +20,18 @@ class VenueComponent extends Component {
             venuesUpdated = venuesUpdated.concat(venue);
             this.setState({ venues: venuesUpdated });
         })
+        venuesRef.on('child_removed', snapshot => {
+        for (var i =0; i < venuesUpdated.length; i++) {
+             console.log(venuesUpdated[i].text);
+             console.log(snapshot.val());
+            if (venuesUpdated[i].id === snapshot.key) {
+             venuesUpdated.splice(i);
+             console.log(venuesUpdated);
+             this.setState({ venues: venuesUpdated });
+              }
+            }
+        })
+        
     }
     addVenue(e) {
         e.preventDefault(); // <- prevent form submit from reloading the page

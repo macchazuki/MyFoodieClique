@@ -10,15 +10,17 @@ class VoteButton extends Component {
       };
     }
 
-    componentWillMount() {
+    componentDidMount() {
       if(this.props.category === 'venues'){
-      fire.database().ref('venues/' + this.props.Venue).on('value', snapshot => {
+      let venueRef = fire.database().ref('venues/' + this.props.Venue);
+      venueRef.on('value', snapshot => {
           // Update React state when venue is added at Firebase Database 
           let count = snapshot.numChildren();
           this.setState({ count : count });
       })
      } else {
-        fire.database().ref('dateTimes/' + this.props.dateTime).on('value', snapshot => {
+       let dateTimeRef = fire.database().ref('dateTimes/' + this.props.dateTime);
+        dateTimeRef.on('value', snapshot => {
           // Update React state when venue is added at Firebase Database 
           let count = snapshot.numChildren();
           this.setState({ count : count });
@@ -29,9 +31,22 @@ class VoteButton extends Component {
   
     vote() {
         if(this.props.category === 'venues') {
-      fire.database().ref('venues/' + this.props.Venue + '/' + this.props.user).set({Vote : true});
+          fire.database().ref('venues/' + this.props.Venue + '/' + this.props.user).once('value', snapshot => {
+            if(snapshot.val()){
+              fire.database().ref('venues/' + this.props.Venue + '/' + this.props.user).remove()
+            } else {
+        fire.database().ref('venues/' + this.props.Venue + '/' + this.props.user).set({Vote : true});
+            }
+          })
+          
       } else {
-      fire.database().ref('dateTimes/' + this.props.dateTime + '/' + this.props.user).set({Vote : true});
+        fire.database().ref('dateTimes/' + this.props.dateTime + '/' + this.props.user).once('value', snapshot => {
+            if(snapshot.val()){
+              fire.database().ref('dateTimes/' + this.props.dateTime + '/' + this.props.user).remove()
+            } else {
+        fire.database().ref('dateTimes/' + this.props.dateTime + '/' + this.props.user).set({Vote : true});
+            }
+          })
       }
     }
   
