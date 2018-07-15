@@ -2,7 +2,7 @@ import React, { Component } from 'react'
 import { Route, Link } from 'react-router-dom'
 import LandingPage from './LandingPage'
 import NewAppt from './NewAppt'
-import fire from '../fire.js';
+import fire from '../fire.js'
 
 class Main extends Component {
     constructor(props) {
@@ -23,10 +23,9 @@ class Main extends Component {
             this.setState({user});
           }
         })
-    }   
+    }       
 
     render() {
-        
         if(fire.auth().currentUser){
         var user = fire.auth().currentUser.uid;
         console.log(user);
@@ -44,9 +43,8 @@ class Main extends Component {
                         <LandingPage user={user}/>
                     </div>
                 )} />
-                <Route path="/NewAppt" render={({ history }) => (
-                    <NewAppt user = {user} onHistory={history} />
-                )} />
+                <Route path="/:uid/:timeStamp" render={(props) => <NewAppt {...props} user ={user} />}/>
+                
                 
             </div>
         )

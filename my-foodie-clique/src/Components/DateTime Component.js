@@ -10,7 +10,7 @@ class DateTimeComponent extends Component {
     componentDidMount() {
 
         /* Create reference to dateTimes in Firebase Database */
-        let dateTimesRef = fire.database().ref('dateTimes').orderByKey().limitToLast(100);
+        let dateTimesRef = fire.database().ref('appointments/' + this.props.host + "/" + this.props.timeStamp + '/dateTimes').orderByKey().limitToLast(100);
         let dateTimeUpdated = [];
         dateTimesRef.on('child_added', snapshot => {
             /* Update React state when dateTime is added at Firebase Database */
@@ -23,7 +23,7 @@ class DateTimeComponent extends Component {
                  console.log(dateTimeUpdated[i].text);
                  console.log(snapshot.val());
                 if (dateTimeUpdated[i].id === snapshot.key) {
-                 dateTimeUpdated.splice(i);
+                 dateTimeUpdated.splice(i, 1);
                  this.setState({ dateTimes: dateTimeUpdated });
                   }
                 }
@@ -35,7 +35,7 @@ class DateTimeComponent extends Component {
         let DateTime = this.inputEl.value;
         //check if input is valid
         if(DateTime){
-        fire.database().ref('dateTimes/' + DateTime + '/' + this.props.user).set({Vote : true});
+        fire.database().ref( 'appointments/' + this.props.host + "/" + this.props.timeStamp + '/dateTimes/' + DateTime + '/' + this.props.user).set({Vote : true});
         this.inputEl.value = ''; // <- clear the input
         }
     }
@@ -50,7 +50,7 @@ class DateTimeComponent extends Component {
                     <h2>
                         <ol>
                             { /* Render the list of dateTimes */
-                                this.state.dateTimes.map(dateTime => <li key={dateTime.id}>{dateTime.id} <VoteButton category = 'dateTimes' Venue = '' user = {user} dateTime = {dateTime.id}/></li>)
+                                this.state.dateTimes.map(dateTime => <li key={dateTime.id}>{dateTime.id} <VoteButton category = 'dateTimes' Venue = '' user = {user} dateTime = {dateTime.id} host = {this.props.host} timeStamp = {this.props.timeStamp}/></li>)
                             }
                         </ol>
                     </h2>

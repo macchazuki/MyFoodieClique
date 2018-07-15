@@ -3,8 +3,6 @@ import VoteButton from './VoteButton'
 import fire from '../fire'
 
 class VenueComponent extends Component {
-
-
      constructor(props) {
         super(props);
         this.state = { venues: []}; // <- set up react state
@@ -12,7 +10,7 @@ class VenueComponent extends Component {
     }
    componentWillMount() {
         // Create reference to venues in Firebase Database 
-        let venuesRef = fire.database().ref('venues').orderByKey().limitToLast(100);
+        let venuesRef = fire.database().ref('appointments/' + this.props.host + "/" + this.props.timeStamp + '/venues').orderByKey().limitToLast(100);
         let venuesUpdated = [];
         venuesRef.on('child_added', snapshot => {
             // Update React state when venue is added at Firebase Database 
@@ -25,13 +23,12 @@ class VenueComponent extends Component {
              console.log(venuesUpdated[i].text);
              console.log(snapshot.val());
             if (venuesUpdated[i].id === snapshot.key) {
-             venuesUpdated.splice(i);
-             console.log(venuesUpdated);
+             venuesUpdated.splice(i, 1);
              this.setState({ venues: venuesUpdated });
               }
             }
         })
-        
+       
     }
     addVenue(e) {
         e.preventDefault(); // <- prevent form submit from reloading the page
@@ -39,13 +36,14 @@ class VenueComponent extends Component {
         let Venue = this.inputEl.value;
         //check if input is valid
         if(Venue){
-        fire.database().ref('venues/' + Venue + '/' + this.props.user).set({Vote : true});
+        fire.database().ref('appointments/' + this.props.host + "/" + this.props.timeStamp + '/venues/' + Venue + '/' + this.props.user).set({Vote : true});
         this.inputEl.value = ''; // <- clear the input
         }
     } 
     
     render() {
         var user = this.props.user;
+        console.log(this.state.venues);
         return (
             <div className="form">
                 <form onSubmit={this.addVenue.bind(this)}>
@@ -54,7 +52,7 @@ class VenueComponent extends Component {
                     <h2>
                         <ol>
                             { /* Render the list of venues */
-                                this.state.venues.map(venue => <li key={venue.id}>{venue.id} <VoteButton category = 'venues' Venue = {venue.id} user = {user} dateTime = '' /> </li>)
+                                this.state.venues.map(venue => <li key={venue.id}>{venue.id} <VoteButton category = 'venues' Venue = {venue.id} user = {user} dateTime = '' host = {this.props.host} timeStamp = {this.props.timeStamp}/> </li>)
                             }
                         </ol>
                     </h2>
