@@ -1,11 +1,12 @@
 import React, { Component } from 'react'
 import VoteButton from './VoteButton'
 import fire from '../fire'
+import Calendar from 'react-calendar';
 
 class DateTimeComponent extends Component {
     constructor(props) {
         super(props);
-        this.state = { dateTimes: [], user : this.props.user }; // <- set up react state
+        this.state = { dateTimes: [], user : this.props.user, date : new Date() }; // <- set up react state
     }
     componentDidMount() {
 
@@ -29,6 +30,13 @@ class DateTimeComponent extends Component {
                 }
             })  
     }
+
+    onChange = date => {
+        this.setState({ date });
+        this.inputEl.value = date.toDateString();
+    }
+    
+
     addDateTime(e) {
         e.preventDefault(); // <- prevent form submit from reloading the page
         /* Send the dateTime to Firebase */
@@ -44,6 +52,10 @@ class DateTimeComponent extends Component {
         console.log(this.state.dateTimes)
         return (
             <div className="form">
+            <Calendar
+            onChange={this.onChange}
+            value={this.state.date}
+            />
                 <form onSubmit={this.addDateTime.bind(this)}>
                     <input type="text" ref={el => this.inputEl = el} />
                     <input type="submit" />
