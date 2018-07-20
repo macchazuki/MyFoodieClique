@@ -41,7 +41,13 @@ class VenueComponent extends Component {
         }
     } 
     
+    handleChange = address => {
+        this.setState({ address });
+
+      };
+
     handleSelect = address => {
+
         fire.database().ref('appointments/' + this.props.host + "/" + this.props.timeStamp + '/venues/' + address + '/' + this.props.user).set({Vote : true});
         this.setState({ address : ""});
     };
