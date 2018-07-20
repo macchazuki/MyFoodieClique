@@ -43,6 +43,7 @@ class DateTimeComponent extends Component {
         let DateTime = this.inputEl.value;
         //check if input is valid
         if(DateTime){
+        this.setState({date : new Date});
         fire.database().ref( 'appointments/' + this.props.host + "/" + this.props.timeStamp + '/dateTimes/' + DateTime + '/' + this.props.user).set({Vote : true});
         this.inputEl.value = ''; // <- clear the input
         }
