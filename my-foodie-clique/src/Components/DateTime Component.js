@@ -1,13 +1,13 @@
 import React, { Component } from 'react'
 import VoteButton from './VoteButton'
 import fire from '../fire'
-import Calendar from 'react-calendar';
-
+import Datetime from 'react-datetime';
 class DateTimeComponent extends Component {
     constructor(props) {
         super(props);
         this.state = { dateTimes: [], user : this.props.user, date : new Date() }; // <- set up react state
     }
+    
     componentDidMount() {
 
         /* Create reference to dateTimes in Firebase Database */
@@ -33,7 +33,8 @@ class DateTimeComponent extends Component {
 
     onChange = date => {
         this.setState({ date });
-        this.inputEl.value = date.toDateString();
+        console.log(date.format("dddd, MMMM Do YYYY, h:mm:ss a"));
+        this.inputEl.value = date.format("dddd, MMMM Do YYYY, h:mm:ss a");
     }
     
 
@@ -43,7 +44,7 @@ class DateTimeComponent extends Component {
         let DateTime = this.inputEl.value;
         //check if input is valid
         if(DateTime){
-        this.setState({date : new Date});
+        this.setState({date : new Date()});
         fire.database().ref( 'appointments/' + this.props.host + "/" + this.props.timeStamp + '/dateTimes/' + DateTime + '/' + this.props.user).set({Vote : true});
         this.inputEl.value = ''; // <- clear the input
         }
@@ -51,11 +52,10 @@ class DateTimeComponent extends Component {
     render() {
         var user = this.props.user
         console.log(this.state.dateTimes)
+      
         return (
-            <div className="form">
-            <Calendar
-            onChange={this.onChange}
-            value={this.state.date}
+            <div className="form">  
+            <Datetime onChange = {this.onChange} input = {false} timeConstraints = {{minutes:{step:10}}}
             />
                 <form onSubmit={this.addDateTime.bind(this)}>
                     <input type="text" ref={el => this.inputEl = el} />
