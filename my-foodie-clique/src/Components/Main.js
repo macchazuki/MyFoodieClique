@@ -3,6 +3,7 @@ import { Route, Link } from 'react-router-dom'
 import LandingPage from './LandingPage'
 import NewAppt from './NewAppt'
 import fire from '../fire.js'
+import UserName from './UserName'
 
 class Main extends Component {
     constructor(props) {
@@ -38,6 +39,11 @@ class Main extends Component {
                 <h1>
                     <Link to="/"> MyFoodieClique </Link>
                 </h1>
+
+                <h2>
+                    <UserName user={user}/>
+                </h2>
+
                 <Route exact path="/" render={() => (
                     <div>
                         <LandingPage user={user}/>
