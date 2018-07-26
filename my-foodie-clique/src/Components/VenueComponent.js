@@ -102,7 +102,7 @@ class VenueComponent extends Component {
                     <h2>
                         <ol>
                             { /* Render the list of venues */
-                                this.state.venues.map(venue => <li key={venue.id}>{venue.id} <VoteButton category = 'venues' Venue = {venue.id} user = {user} dateTime = '' host = {this.props.host} timeStamp = {this.props.timeStamp}/> </li>)
+                                this.state.venues.map(venue => <li key={venue.id}>{venue.id} <VoteButton category = 'venues' venue_dateTime = {venue.id} user = {user}  host = {this.props.host} timeStamp = {this.props.timeStamp}/> </li>)
                             }
                         </ol>
                     </h2>

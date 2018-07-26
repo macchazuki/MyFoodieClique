@@ -63,7 +63,7 @@ class DateTimeComponent extends Component {
                     <h2>
                         <ol>
                             { /* Render the list of dateTimes */
-                                this.state.dateTimes.map(dateTime => <li key={dateTime.id}>{dateTime.id} <VoteButton category = 'dateTimes' Venue = '' user = {user} dateTime = {dateTime.id} host = {this.props.host} timeStamp = {this.props.timeStamp}/></li>)
+                                this.state.dateTimes.map(dateTime => <li key={dateTime.id}>{dateTime.id} <VoteButton category = 'dateTimes'  user = {user} venue_dateTime = {dateTime.id} host = {this.props.host} timeStamp = {this.props.timeStamp}/></li>)
                             }
                         </ol>
                     </h2>
