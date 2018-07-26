@@ -44,7 +44,7 @@ class UserName extends Component {
   
           if(!this.state.nameExists) {
         return (
-          <form onSubmit={this.handleSubmit}>
+          <form className="user" onSubmit={this.handleSubmit}>
             <label>
               Name:
               <input type="text" value={this.state.value} onChange={this.handleChange} />
@@ -54,7 +54,7 @@ class UserName extends Component {
         );
     } else {
         return (
-            <div>
+            <div className="user">
                 
             Welcome {this.state.value}
             <button onClick={this.handleClick}>
