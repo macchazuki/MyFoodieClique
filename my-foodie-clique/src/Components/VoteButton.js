@@ -1,12 +1,13 @@
 import React, {Component} from 'react'
 import fire from '../fire'
 
-
 class VoteButton extends Component {
     constructor() {
       super();
       this.state = {
         count: 0,
+        users : [],
+        username : []
 
       };
     }
@@ -29,16 +30,45 @@ class VoteButton extends Component {
             }
           })
         }
+
+    usersVoted() {
+      let users = [];
+      let username = [];
+      fire.database().ref('appointments/' + this.props.host + "/" + this.props.timeStamp + '/' + this.props.category + '/' + this.props.venue_dateTime).on('child_added', snapshot => {
+        users = users.concat(snapshot.key);
+        this.setState({users : users})
+        })
+
+        for(var i = 0; i < this.state.users.length; i++){
+            fire.database().ref('users/' + this.state.users[i] + '/Name').once('value', snapshot => {
+                if(snapshot.val()) {
+                username = username.concat(snapshot.val());
+                } else {
+                  username = username.concat('Anon');
+                }
+                this.setState({username : username})
+                
+        })
+    } 
+    console.log(this.state.username);
+}
   
     render() {
 
       var count = this.state.count;
-      return (<button
+      
+      return (
+              <div>
+              <button
                 onClick={() => this.vote()}
-                
-              >
+                onMouseEnter={() => this.usersVoted()}
+                  title = { this.state.username.join('\u000A') }
+
+             >   
                 Voted {count} times
-              </button>);
+              </button>
+              </div>
+              );
     }
   }
 

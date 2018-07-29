@@ -1,7 +1,7 @@
 import React, { Component } from 'react'
 import VoteButton from './VoteButton'
 import fire from '../fire'
-import Datetime from 'react-datetime';
+
 class DateTimeComponent extends Component {
     constructor(props) {
         super(props);
@@ -31,13 +31,6 @@ class DateTimeComponent extends Component {
             })  
     }
 
-    onChange = date => {
-        this.setState({ date });
-        console.log(date.format("dddd, MMMM Do YYYY, h:mm:ss a"));
-        this.inputEl.value = date.format("dddd, MMMM Do YYYY, h:mm:ss a");
-    }
-    
-
     addDateTime(e) {
         e.preventDefault(); // <- prevent form submit from reloading the page
         /* Send the dateTime to Firebase */
@@ -55,10 +48,8 @@ class DateTimeComponent extends Component {
       
         return (
             <div className="form">  
-            <Datetime onChange = {this.onChange} input = {false} timeConstraints = {{minutes:{step:10}}}
-            />
                 <form onSubmit={this.addDateTime.bind(this)}>
-                    <input type="text" ref={el => this.inputEl = el} />
+                    <input type="datetime-local" ref={el => this.inputEl = el} />
                     <input type="submit" />
                     <h2>
                         <ol>
