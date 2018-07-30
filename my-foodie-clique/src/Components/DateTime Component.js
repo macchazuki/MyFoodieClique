@@ -11,7 +11,7 @@ class DateTimeComponent extends Component {
     componentDidMount() {
 
         /* Create reference to dateTimes in Firebase Database */
-        let dateTimesRef = fire.database().ref('appointments/' + this.props.host + "/" + this.props.timeStamp + '/dateTimes').orderByKey().limitToLast(100);
+        let dateTimesRef = fire.database().ref('appointments/' + this.props.host + "/" + this.props.timeStamp + '/dateTimes').orderByChild('Votes/votes');
         let dateTimeUpdated = [];
         dateTimesRef.on('child_added', snapshot => {
             /* Update React state when dateTime is added at Firebase Database */
@@ -21,8 +21,6 @@ class DateTimeComponent extends Component {
         })    
         dateTimesRef.on('child_removed', snapshot => {
             for (var i =0; i < dateTimeUpdated.length; i++) {
-                 console.log(dateTimeUpdated[i].text);
-                 console.log(snapshot.val());
                 if (dateTimeUpdated[i].id === snapshot.key) {
                  dateTimeUpdated.splice(i, 1);
                  this.setState({ dateTimes: dateTimeUpdated });
@@ -37,14 +35,14 @@ class DateTimeComponent extends Component {
         let DateTime = this.inputEl.value;
         //check if input is valid
         if(DateTime){
-        this.setState({date : new Date()});
+        fire.database().ref( 'appointments/' + this.props.host + "/" + this.props.timeStamp + '/dateTimes/' + DateTime + '/Votes').set({votes : 1});
         fire.database().ref( 'appointments/' + this.props.host + "/" + this.props.timeStamp + '/dateTimes/' + DateTime + '/' + this.props.user).set({Vote : true});
         this.inputEl.value = ''; // <- clear the input
+       
         }
     }
     render() {
         var user = this.props.user
-        console.log(this.state.dateTimes)
       
         return (
             <div className="form">  
@@ -54,7 +52,7 @@ class DateTimeComponent extends Component {
                     <h2>
                         <ol>
                             { /* Render the list of dateTimes */
-                                this.state.dateTimes.map(dateTime => <li key={dateTime.id}>{dateTime.id} <VoteButton category = 'dateTimes'  user = {user} venue_dateTime = {dateTime.id} host = {this.props.host} timeStamp = {this.props.timeStamp}/></li>)
+                                this.state.dateTimes.reverse().map(dateTime => <li key={dateTime.id}>{dateTime.id} <VoteButton category = 'dateTimes'  user = {user} venue_dateTime = {dateTime.id} host = {this.props.host} timeStamp = {this.props.timeStamp}/></li>)
                             }
                         </ol>
                     </h2>

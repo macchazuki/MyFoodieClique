@@ -10,18 +10,16 @@ class VenueComponent extends Component {
     }
    componentWillMount() {
         // Create reference to venues in Firebase Database 
-        let venuesRef = fire.database().ref('appointments/' + this.props.host + "/" + this.props.timeStamp + '/venues').orderByKey().limitToLast(100);
+        let venuesRef = fire.database().ref('appointments/' + this.props.host + "/" + this.props.timeStamp + '/venues').orderByChild('Votes/votes');
         let venuesUpdated = [];
         venuesRef.on('child_added', snapshot => {
             // Update React state when venue is added at Firebase Database 
             let venue = [{ text: snapshot.val(), id: snapshot.key }];
             venuesUpdated = venuesUpdated.concat(venue);
-            this.setState({ venues: venuesUpdated });
+            this.setState({ venues: venuesUpdated});
         })
         venuesRef.on('child_removed', snapshot => {
         for (var i =0; i < venuesUpdated.length; i++) {
-             console.log(venuesUpdated[i].text);
-             console.log(snapshot.val());
             if (venuesUpdated[i].id === snapshot.key) {
              venuesUpdated.splice(i, 1);
              this.setState({ venues: venuesUpdated });
@@ -38,6 +36,8 @@ class VenueComponent extends Component {
         if(Venue){
         fire.database().ref('appointments/' + this.props.host + "/" + this.props.timeStamp + '/venues/' + Venue + '/' + this.props.user).set({Vote : true});
         this.setState({ address : ""});
+        fire.database().ref('appointments/' + this.props.host + "/" + this.props.timeStamp + '/venues/' + Venue + '/Votes').set({votes : 1});
+
         }
     } 
     
@@ -47,9 +47,11 @@ class VenueComponent extends Component {
       };
 
     handleSelect = address => {
-
-        fire.database().ref('appointments/' + this.props.host + "/" + this.props.timeStamp + '/venues/' + address + '/' + this.props.user).set({Vote : true});
-        this.setState({ address : ""});
+      fire.database().ref('appointments/' + this.props.host + "/" + this.props.timeStamp + '/venues/' + address + '/Votes').set({votes : 1});
+      this.setState({ address : ""});
+      fire.database().ref('appointments/' + this.props.host + "/" + this.props.timeStamp + '/venues/' + address + '/' + this.props.user).set({Vote : true});
+      
+        
     };
 
     render() {
@@ -102,7 +104,7 @@ class VenueComponent extends Component {
                     <h2>
                         <ol>
                             { /* Render the list of venues */
-                                this.state.venues.map(venue => <li key={venue.id}>{venue.id} <VoteButton category = 'venues' venue_dateTime = {venue.id} user = {user}  host = {this.props.host} timeStamp = {this.props.timeStamp}/> </li>)
+                                this.state.venues.reverse().map(venue => <li key={venue.id}>{venue.id} <VoteButton category = 'venues' venue_dateTime = {venue.id} user = {user}  host = {this.props.host} timeStamp = {this.props.timeStamp}/> </li>)
                             }
                         </ol>
                     </h2>

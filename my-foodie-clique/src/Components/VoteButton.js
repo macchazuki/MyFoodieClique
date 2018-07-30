@@ -4,6 +4,7 @@ import fire from '../fire'
 class VoteButton extends Component {
     constructor() {
       super();
+      
       this.state = {
         count: 0,
         users : [],
@@ -13,30 +14,43 @@ class VoteButton extends Component {
     }
 
     componentDidMount() {
+      var count;
       let venueRef = fire.database().ref('appointments/' + this.props.host + "/" + this.props.timeStamp + '/' + this.props.category + '/' + this.props.venue_dateTime);
       venueRef.on('value', snapshot => {
           // Update React state when venue is added at Firebase Database 
-          let count = snapshot.numChildren();
+          count = snapshot.numChildren() - 1;
           this.setState({ count : count });
       }) 
+
+      fire.database().ref('appointments/' + this.props.host + "/" + this.props.timeStamp + '/' + this.props.category + '/' + this.props.venue_dateTime + '/Votes').set({votes : count});
   }
   
     vote() {
+      var count = this.state.count;
           fire.database().ref('appointments/' + this.props.host + "/" + this.props.timeStamp + '/' + this.props.category + '/' + this.props.venue_dateTime + '/' + this.props.user).once('value', snapshot => {
             if(snapshot.val()){
-              fire.database().ref('appointments/' + this.props.host + "/" + this.props.timeStamp + '/' + this.props.category + '/' + this.props.venue_dateTime + '/' + this.props.user).remove()
+              fire.database().ref('appointments/' + this.props.host + "/" + this.props.timeStamp + '/' + this.props.category + '/' + this.props.venue_dateTime + '/' + this.props.user).remove();
+              count--;
             } else {
         fire.database().ref('appointments/' + this.props.host + "/" + this.props.timeStamp + '/' + this.props.category + '/' + this.props.venue_dateTime + '/' + this.props.user).set({Vote : true});
+        count++;
             }
           })
-        }
+          fire.database().ref('appointments/' + this.props.host + "/" + this.props.timeStamp + '/' + this.props.category + '/' + this.props.venue_dateTime + '/Votes').set({votes : count});
+          if(count === 0){
+                fire.database().ref('appointments/' + this.props.host + "/" + this.props.timeStamp + '/' + this.props.category + '/' + this.props.venue_dateTime).remove();
+              }
+          }
+        
 
     usersVoted() {
       let users = [];
       let username = [];
       fire.database().ref('appointments/' + this.props.host + "/" + this.props.timeStamp + '/' + this.props.category + '/' + this.props.venue_dateTime).on('child_added', snapshot => {
+        if(snapshot.key !== 'Votes'){
         users = users.concat(snapshot.key);
         this.setState({users : users})
+        }
         })
 
         for(var i = 0; i < this.state.users.length; i++){
