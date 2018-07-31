@@ -38,7 +38,7 @@ class DateTimeComponent extends Component {
         DateTime = new Date(DateTime);
         fire.database().ref( 'appointments/' + this.props.host + "/" + this.props.timeStamp + '/dateTimes/' + DateTime.toString() + '/Votes').set({votes : 1});
         fire.database().ref( 'appointments/' + this.props.host + "/" + this.props.timeStamp + '/dateTimes/' + DateTime.toString() + '/' + this.props.user).set({Vote : true});
-        this.inputEl.value = Date(); // <- clear the input
+      // this.inputEl.value = Date(); // <- clear the input
 
        
         }
