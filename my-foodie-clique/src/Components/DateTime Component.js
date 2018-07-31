@@ -5,7 +5,7 @@ import fire from '../fire'
 class DateTimeComponent extends Component {
     constructor(props) {
         super(props);
-        this.state = { dateTimes: [], user : this.props.user, date : new Date() }; // <- set up react state
+        this.state = { dateTimes: [], user : this.props.user }; // <- set up react state
     }
     
     componentDidMount() {
@@ -36,10 +36,10 @@ class DateTimeComponent extends Component {
         //check if input is valid
         if(DateTime){
         DateTime = new Date(DateTime);
-        console.log(DateTime.toGMTString());
         fire.database().ref( 'appointments/' + this.props.host + "/" + this.props.timeStamp + '/dateTimes/' + DateTime.toString() + '/Votes').set({votes : 1});
         fire.database().ref( 'appointments/' + this.props.host + "/" + this.props.timeStamp + '/dateTimes/' + DateTime.toString() + '/' + this.props.user).set({Vote : true});
-        this.inputEl.value = ''; // <- clear the input
+        this.inputEl.value = Date(); // <- clear the input
+
        
         }
     }
