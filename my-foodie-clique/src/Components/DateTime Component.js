@@ -32,11 +32,13 @@ class DateTimeComponent extends Component {
     addDateTime(e) {
         e.preventDefault(); // <- prevent form submit from reloading the page
         /* Send the dateTime to Firebase */
-        let DateTime = this.inputEl.value;
+        var DateTime = this.inputEl.value;
         //check if input is valid
         if(DateTime){
-        fire.database().ref( 'appointments/' + this.props.host + "/" + this.props.timeStamp + '/dateTimes/' + DateTime + '/Votes').set({votes : 1});
-        fire.database().ref( 'appointments/' + this.props.host + "/" + this.props.timeStamp + '/dateTimes/' + DateTime + '/' + this.props.user).set({Vote : true});
+        DateTime = new Date(DateTime);
+        console.log(DateTime.toGMTString());
+        fire.database().ref( 'appointments/' + this.props.host + "/" + this.props.timeStamp + '/dateTimes/' + DateTime.toString() + '/Votes').set({votes : 1});
+        fire.database().ref( 'appointments/' + this.props.host + "/" + this.props.timeStamp + '/dateTimes/' + DateTime.toString() + '/' + this.props.user).set({Vote : true});
         this.inputEl.value = ''; // <- clear the input
        
         }
